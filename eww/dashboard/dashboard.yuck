@@ -1,0 +1,426 @@
+;; Profile
+(defwindow profile_dashboard
+	:stacking "fg"
+	:wm-ignore true
+	:windowtype "normal"
+	:geometry (geometry
+		:x "10%"
+		:y "10%"
+		:width "20%"
+		:height "40%")
+	(box
+		:class "profile-dashboard"
+		:orientation "v"
+		(profile_username)
+		(profile_hostname)
+		(profile_bio)))
+
+(defvar username "Ali")
+(defwidget profile_username []
+	(label
+		:valign "center"
+		:halign "center"
+		:class "profile-username"
+		:text "${username}"))
+
+(defpoll hostname
+	:interval "3600s"
+	"cat /etc/hostname")
+(defwidget profile_hostname []
+	(label
+		:valign "center"
+		:halign "center"
+		:class "profile-hostname"
+		:text "${hostname}"))
+
+(defwidget profile_bio []
+	(box
+		:orientation "v"
+		:class "profile-bio"
+		:valign "center"
+		:halign "center"
+		(label :text "Yesterday I was clever, so I wanted to change the world.")
+		(label :text "Today I am wise, so I am hanging myself")))
+
+;; Progress Window
+(defwindow progress_dashboard
+	:stacking "fg"
+	:wm-ignore true
+	:windowtype "normal"
+	:geometry (geometry
+		:x "10%"
+		:y "51%"
+		:width "20%"
+		:height "26%")
+	(box
+		:class "progress-dashboard"
+		:orientation "v"
+		(battery_progress)
+		(ram_progress)
+		(volume)
+		(brightness)))
+
+(defwidget battery_progress []
+	(box
+		:valign "center"
+		:orientation "h"
+		:space-evenly false
+		(label
+			:class "battery-icon"
+			:text "")
+		(scale
+			:class "battery-bar"
+			:active false
+			:hexpand true
+			:min 0 :max 101
+			:value "${EWW_BATTERY.BATC.capacity}")
+		(label
+			:class "battery-value"
+			:text "${EWW_BATTERY.BATC.capacity}%")))
+
+(defwidget ram_progress []
+	(box
+		:valign "center"
+		:orientation "h"
+		:space-evenly false
+		(label
+			:class "ram-icon"
+			:text "")
+		(scale
+			:class "ram-bar"
+			:hexpand true
+			:active false
+			:min 0 :max 101
+			:value mem)
+		(label
+			:class "ram-value"
+			:text "${mem}%")))
+
+(defpoll volume_level
+	:interval "1s"
+	`awk -F"[][]" '/Left:/ { print $2 }' <(amixer sget Master) | sed 's/%//'`)
+(defwidget volume []
+		(box
+		:valign "center"
+		:orientation "h"
+		:space-evenly false
+		(label
+			:class "volume-icon"
+			:text "")
+		(eventbox
+			:cursor "pointer"
+			:hexpand true
+			(scale
+				:class "volume-bar"
+				:min 0 :max 101
+				:onchange "amixer sset Master {}%"
+				:value volume_level))
+		(label
+			:class "volume-value"
+			:text "${volume_level}%")))
+
+(defpoll brightness_level
+	:interval "1s"
+	"brightnessctl -m -d intel_backlight | awk -F, '{print substr($4, 0, length($4)-1)}' | tr -d '%'")
+(defwidget brightness []
+		(box
+		:valign "center"
+		:orientation "h"
+		:space-evenly false
+		(label
+			:class "brightness-icon"
+			:text "")
+		(eventbox
+			:cursor "pointer"
+			:hexpand true
+			(scale
+				:class "brightness-bar"
+				:min 0 :max 101
+				:onchange "brightnessctl s {}%"
+				:value brightness_level))
+		(label
+			:class "brightness-value"
+			:text "${brightness_level}%")))
+
+;; Uphours
+(defpoll uphours
+	:interval "10s"
+	`uptime -p | awk '{print $2 \" \" $3}' | sed 's/,//g'`)
+(defpoll upminutes
+	:interval "10s"
+	"uptime -p | awk '{print $4 \" \" $5}'")
+(defwindow uptime_dashboard
+	:stacking "fg"
+	:wm-ignore true
+	:windowtype "normal"
+	:geometry (geometry
+		:x "10%"
+		:y "78%"
+		:width "20%"
+		:height "12%")
+	(box
+		:class "uptime-dashboard"
+		:orientation "h"
+		(label
+			:class "uptime-icon"
+			:halign "center"
+			:text "")
+		(box
+			:class "uptime-values"
+			:halign "center"
+			:valign "center"
+			:space-evenly false
+			:orientation "v"
+			(box
+				(label :text "${uphours}"))
+			(box
+			(label :text "${upminutes}")))))
+
+;; Applications
+(defwindow applications_dashboard
+	:stacking "fg"
+	:wm-ignore true
+	:windowtype "normal"
+	:geometry (geometry
+		:x "31%"
+		:y "10%"
+		:width "30%"
+		:height "30%")
+	(box
+		:class "applications-dashboard"
+		:orientation "h"
+		(firefox_button_dashboard)
+		(filemanager_button_dashboard)
+		(pdf_reader_button_dashboard)
+		(terminal_button_dashboard)))
+
+(defwidget firefox_button_dashboard []
+	(eventbox
+		:cursor "pointer"
+		(button
+			:class "application-button"
+			:onclick "~/.config/eww/dashboard/scripts/close_all & firefox &"
+			"")))
+(defwidget filemanager_button_dashboard []
+	(eventbox
+		:cursor "pointer"
+		(button
+			:class "application-button"
+			:onclick "~/.config/eww/dashboard/scripts/close_all & pcmanfm ~/ &"
+			"")))
+(defwidget terminal_button_dashboard []
+	(eventbox
+		:cursor "pointer"
+		(button
+			:class "application-button"
+			:onclick "~/.config/eww/dashboard/scripts/close_all & alacritty &"
+			"")))
+(defwidget pdf_reader_button_dashboard []
+	(eventbox
+		:cursor "pointer"
+		(button
+			:class "application-button"
+			:onclick "~/.config/eww/dashboard/scripts/close_all & zathura &"
+			"")))
+
+(defwindow disk_dashboard
+	:stacking "fg"
+	:wm-ignore true
+	:windowtype "normal"
+	:geometry (geometry
+		:x "62%"
+		:y "10%"
+		:width "17%"
+		:height "80%")
+	(box
+		:class "disk-dashboard"
+		:orientation "v"
+		(box
+			:valign "center"
+			:halign "center"
+			:class "disk-box-dashboard"
+			:orientation "h"
+			(label
+				:class "disk-dashboard-icon"
+				:text "")
+			(label
+				:class "disk-seperator"
+				:text "|")
+			(label
+				:class "disk-value"
+				:text "${disk_free}GB"))
+			(box
+				:class "folder-button documents-folder-button"
+				:hexpand false :vexpand false
+				:space-evenly false
+				(label :class "folder-icon" :text "")
+				(eventbox
+					:cursor "pointer"
+					(button
+						:onclick "~/.config/eww/dashboard/scripts/close_all & pcmanfm ~/Documents/ &"
+						"Documents")))
+			(box
+				:class "folder-button download-folder-button"
+				:hexpand false :vexpand false
+				:space-evenly false
+				(label :class "folder-icon" :text "")
+				(eventbox
+					:cursor "pointer"
+					(button
+						:onclick "~/.config/eww/dashboard/scripts/close_all & pcmanfm ~/Downloads/ &"
+						"Downloads")))
+			(box
+				:class "folder-button pictures-folder-button"
+				:hexpand false :vexpand false
+				:space-evenly false
+				(label :class "folder-icon" :text "")
+				(eventbox
+					:cursor "pointer"
+					(button
+						:onclick "~/.config/eww/dashboard/scripts/close_all & pcmanfm ~/Pictures/ &"
+						"Pictures")))
+			(box
+				:class "folder-button music-folder-button"
+				:hexpand false :vexpand false
+				:space-evenly false
+				(label :class "folder-icon" :text "")
+			(eventbox
+				:cursor "pointer"
+				(button
+					:onclick "~/.config/eww/dashboard/scripts/close_all & pcmanfm ~/Music/ &"
+					"Music")))
+			(box
+				:class "folder-button dev-folder-button"
+				:hexpand false :vexpand false
+				:space-evenly false
+				(label :class "folder-icon" :text "")
+				(eventbox
+					:cursor "pointer"
+					(button
+						:onclick "~/.config/eww/dashboard/scripts/close_all & pcmanfm ~/Dev/ &"
+						"Dev")))
+			(box
+				:class "folder-button config-folder-button"
+				:hexpand false :vexpand false
+				:space-evenly false
+				(label :class "folder-icon" :text "")
+				(eventbox
+					:cursor "pointer"
+					(button
+						:onclick "~/.config/eww/dashboard/scripts/close_all & pcmanfm ~/.config/ &"
+						"~/.config")))
+			(box
+				:class "folder-button local-folder-button"
+				:hexpand false :vexpand false
+				:space-evenly false
+				(label :class "folder-icon" :text "")
+				(eventbox
+					:cursor "pointer"
+					(button
+						:onclick "~/.config/eww/dashboard/scripts/close_all & pcmanfm ~/.local/ &"
+						"~/.local")))))
+
+(defpoll weather_status
+	:interval "60s"
+	"python ~/.config/eww/dashboard/scripts/weather.py status")
+(defpoll weather_temp
+	:interval "60s"
+	"python ~/.config/eww/dashboard/scripts/weather.py temp")
+(defwindow weather_dashboard []
+	:stacking "fg"
+	:wm-ignore true
+	:windowtype "normal"
+	:geometry (geometry
+		:x "31%"
+		:y "41%"
+		:width "30%"
+		:height "49%")
+	(box
+		:class "weather-dashboard"
+		:orientation "v"
+		(box
+			:class { "${weather_status}" == "Rain" ? "rainy-weather" :
+				"${weather_status}" == "Clouds" ? "cloudy-weather" :
+				"${weather_status}" == "Snow" ? "snowy-weather" : "sunny-weather" }
+			:valign "center"
+			:orientation "h"
+			(label
+				:class "weather-status-icon"
+				:text { "${weather_status}" == "Rain" ? "" :
+					"${weather_status}" == "Clouds" ? "" :
+					"${weather_status}" == "Snow" ? "" : "" })
+			(label
+				:class "weather-temp"
+				:text { "${weather_temp}" != "" ? "${weather_temp}°C": "Connecting" }))
+		(box
+			:orientation "v"
+			:halign "center"
+			:spacing -100
+			(label
+				:class "weather-title"
+				:text "${weather_status}")
+			(label
+				:valign "center"
+				:class "weather-desc"
+				:text { "${weather_status}" == "Rain" ? "It's a rainy day" :
+					"${weather_status}" == "Clouds" ? "It's a cloudy day." :
+					"${weather_status}" == "Snow" ? "It's a snowy day." : "It's a sunny day"})
+			(label
+				:valign "center"
+				:class "weather-desc"
+				:text { "${weather_status}" == "Rain" ? "Go for a walk, also dont forget to bring your umberella." :
+					"${weather_status}" == "Clouds" ? "Relax, drink a cup of coffee. Listen to a song." :
+					"${weather_status}" == "Snow" ? "Go out, take a picture. Outside is white." : "It's warm outside. Bring a bottle of water out." })
+			)))
+
+;; Powermenu
+(defwindow powermenu_dashboard
+	:stacking "fg"
+	:wm-ignore true
+	:windowtype "normal"
+	:geometry (geometry
+		:x "80%"
+		:y "10%"
+		:width "10%"
+		:height "80%")
+	(box
+		:class "powermenu-dashboard"
+		:orientation "v"
+		(poweroff_button_dashboard)
+		(reboot_button_dashboard)
+		(sleep_button_dashboard)
+		(exit_button_dashboard)))
+
+(defwidget poweroff_button_dashboard []
+	(eventbox
+		:cursor "pointer"
+		(button
+			:valign "start"
+			:class "poweroff-button dashboard-poweroff-button"
+			:onclick "poweroff"
+			"")))
+(defwidget reboot_button_dashboard []
+	(eventbox
+		:cursor "pointer"
+		(button
+			:valign "center"
+			:class "reboot-button dashboard-reboot-button"
+			:onclick "reboot"
+			"")))
+(defwidget sleep_button_dashboard []
+	(eventbox
+		:cursor "pointer"
+		(button
+			:valign "end"
+			:class "sleep-button dashboard-sleep-button"
+			:onclick "systemctl suspend"
+			"")))
+(defwidget exit_button_dashboard []
+	(eventbox
+		:cursor "pointer"
+		(button
+			:valign "end"
+			:class "exit-button dashboard-exit-button"
+			:onclick "~/.config/eww/dashboard/scripts/close_all"
+			"")))
+

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+rofi -theme ~/.config/rofi/rofi.rasi -show-icons -show drun &
+

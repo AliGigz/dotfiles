@@ -1,0 +1,9 @@
+#!/bin/bash
+
+eww close powermenu_dashboard &
+eww close profile_dashboard &
+eww close progress_dashboard &
+eww close uptime_dashboard &
+eww close disk_dashboard &
+eww close weather_dashboard &
+eww close applications_dashboard &

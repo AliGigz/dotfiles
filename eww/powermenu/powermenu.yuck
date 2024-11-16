@@ -1,0 +1,47 @@
+;; TITLE: PowerMenu
+;; AUTHOR: AliGigz
+;; DESCRIPTION: Powermenu created by AliGigz with eww widgets
+
+
+; Defining the main window
+(defwindow powermenu
+	:class "powermenu"
+	:stacking "fg"
+	:windowtype "normal"
+	:wm-ignore true
+	:geometry (geometry
+				:width "100%"
+				:height "100%"
+				:anchor "center")
+	:align "center"
+	(powermenu_content))
+
+; Creating the layout to have 3 button for poweroff, reboot and exit
+(defwidget powermenu_content []
+	(box
+		:orientation "horizontal"
+		(eventbox
+			:cursor "pointer"
+			(button 
+				:class "poweroff-button"
+				:onclick "poweroff"
+				:width "10%"
+				:height "15%"
+				""))
+		(eventbox
+			:cursor "pointer"
+			(button 
+				:class "reboot-button"
+				:onclick "reboot"
+				:width "10%"
+				:height "15%"
+				""))
+		(eventbox
+			:cursor "pointer"
+			(button 
+				:class "exit-button"
+				:onclick "eww close powermenu"
+				:width "10%"
+				:height "15%"
+				""))))
+

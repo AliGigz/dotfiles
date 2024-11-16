@@ -1,0 +1,3 @@
+#!/bin/bash
+
+eww open-many powermenu_dashboard profile_dashboard progress_dashboard uptime_dashboard disk_dashboard weather_dashboard applications_dashboard

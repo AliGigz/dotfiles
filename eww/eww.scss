@@ -1,0 +1,381 @@
+$dark: #11111b;
+$lighter: #242433;
+$fg: #cdd6f4;
+$comments: #44475a;
+$blue: #89b4fa;
+$red: #f38ba8;
+$orange: #ff9e64;
+$cyan: #8be9fd;
+$green: #a6e3a1;
+$yellow: #f9e2af;
+$purple: #bd03f9;
+$soft: #C7C4BF;
+
+* {
+  all: unset;
+  font-family: "JetBrainsMono Nerd Font Mono";
+  font-weight: bold;
+}
+
+/* Bar */
+.bar {
+  border-radius: 15px;
+  font-size: 1.9rem;
+}
+
+.top-content {
+  background-color: $dark;
+  border-radius: 15px;
+  padding: .8rem .8rem .8rem .8rem;
+}
+.center-conetnt {
+  background-color: $dark;
+  border-radius: 15px;
+  margin-top: 2rem;
+  padding: .8rem .8rem .8rem .8rem;
+}
+.bottom-content {
+  background-color: $dark;
+  border-radius: 15px;
+  margin-top: 2rem;
+  padding: .3rem .3rem .3rem .3rem;
+}
+
+// launcher
+.launcher-button {
+  color: $blue;
+  border-radius: 15px;
+}
+
+// workspaces
+.workspaces {
+  border-radius: 15px;
+}
+.workspace-button {
+  color: $comments;
+}
+.workspace-button:hover {
+  color: $fg;
+}
+.focused-ws {
+  color: $green;
+}
+.occupied-ws {
+  color: $fg;
+}
+
+// temp
+.temp-box {
+  color: $blue;
+  border-radius: 15px;
+}
+
+// memory
+.memory-box {
+  color: $blue;
+  border-radius: 15px;
+  font-size: 2.1rem;
+}
+// disk
+.disk-box {
+  color: $yellow;
+  border-radius: 15px;
+  font-size: 2.1rem;
+}
+
+// wifi
+.wifi-box {
+  color: $cyan;
+  border-radius: 15px;
+}
+.not-connected {
+  color: $red;
+}
+
+// battery
+.battery-box {
+  color: $green;
+  border-radius: 15px;
+}
+
+// clock
+.clock {
+  color: $blue;
+  border-radius: 15px;
+}
+
+// powermenu button
+.powermenu-button {
+  color: $red;
+  border-radius: 15px;
+}
+
+/* PowerMenu */
+.powermenu {
+  background-color: $dark;
+  font-size: 9rem;
+}
+
+.poweroff-button {
+  background-color: $dark;
+  color: $comments;
+}
+.poweroff-button:hover {
+  color: $red;
+}
+
+.reboot-button {
+  background-color: $dark;
+  color: $comments;
+}
+.reboot-button:hover {
+  color: $blue;
+}
+
+.sleep-button {
+  background-color: $dark;
+  color: $comments;
+}
+.sleep-button:hover {
+  color: $yellow;
+}
+
+.exit-button {
+  background-color: $dark;
+  color: $comments;
+}
+.exit-button:hover {
+  color: $orange;
+}
+
+/* Dashbaord */
+.profile-dashboard {
+  background-color: $dark;
+  border-radius: 15px;
+  padding: .7rem .7rem .7rem .7rem;
+}
+.profile-username {
+  color: $red;
+  font-size: 4rem;
+}
+.profile-hostname {
+  color: $blue;
+  font-size: 2rem;
+}
+.profile-bio {
+  color: $cyan;
+  border-radius: 15px;
+  font-size: .51rem;
+}
+
+.powermenu-dashboard {
+  background-color: $dark;
+  border-radius: 15px;
+  font-size: 7rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+.applications-dashboard {
+  background-color: $dark;
+  border-radius: 15px;
+  font-size: 7rem;
+  padding: .7rem .7rem .7rem .7rem;
+}
+.application-button {
+  color: $comments;
+}
+.application-button:hover {
+  color: $cyan;
+}
+
+.progress-dashboard {
+  background-color: $dark;
+  border-radius: 15px;
+  padding: .7rem .7rem .7rem .7rem;
+}
+
+.ram-icon {
+  color: $blue;
+  font-size: 1.5rem;
+  padding-right: .5rem;
+}
+.ram-bar trough highlight {
+  background-color: $blue;
+  border-radius: 15px;
+  min-height: 1rem;
+  min-width: 1rem;
+  padding-left: .5rem;
+  padding-right: .5rem;
+}
+.ram-value {
+  color: $blue;
+  font-size: 1rem;
+  padding-left: .5rem;
+}
+
+.volume-icon {
+  color: $red;
+  font-size: 2rem;
+  padding-right: .5rem;
+}
+.volume-bar trough highlight {
+  background-color: $red;
+  border-radius: 15px;
+  min-height: 1rem;
+  min-width: 1rem;
+  padding-left: .5rem;
+  padding-right: .5rem;
+}
+.volume-value {
+  color: $red;
+  font-size: 1rem;
+  padding-left: .5rem;
+}
+
+.brightness-icon {
+  color: $yellow;
+  font-size: 2rem;
+  padding-right: .5rem;
+}
+.brightness-bar trough highlight {
+  background-color: $yellow;
+  border-radius: 15px;
+  min-height: 1rem;
+  min-width: 1rem;
+  padding-left: .5rem;
+  padding-right: .5rem;
+}
+.brightness-value {
+  color: $yellow;
+  font-size: 1rem;
+  padding-left: .5rem;
+}
+
+.battery-icon {
+  color: $green;
+  font-size: 2rem;
+  padding-right: .5rem;
+}
+.battery-bar trough highlight {
+  background-color: $green;
+  border-radius: 15px;
+  color: $green;
+  min-height: 1rem;
+  min-width: 1rem;
+  padding-left: .5rem;
+  padding-right: .5rem;
+}
+.battery-value {
+  color: $green;
+  font-size: 1rem;
+  padding-left: .5rem;
+}
+
+.uptime-dashboard {
+  background-color: $dark;
+  color: $red;
+  border-radius: 15px;
+  padding: .7rem .7rem .7rem .7rem;
+}
+.uptime-icon {
+  font-size: 3rem;
+}
+.uptime-value {
+  font-size: 2rem;
+}
+
+.disk-dashboard {
+  background-color: $dark;
+  border-radius: 15px;
+  padding: .7rem .7rem .7rem .7rem;
+}
+.disk-box-dashboard {
+  background-color: $lighter;
+  color: $orange;
+  border-radius: 15px;
+}
+.disk-dashboard-icon {
+  font-size: 3rem
+}
+.disk-seperator {
+  font-size: 2rem
+}
+.disk-value {
+  font-size: 1rem;
+  padding-right: 1rem;
+}
+.folder-icon {
+  font-size: 1.1rem;
+  padding-right: 1rem;
+  padding-left: 4rem;
+}
+.documents-folder-button {
+  color: $green;
+  font-size: 1.1rem;
+}
+.download-folder-button {
+  color: $red;
+  font-size: 1.1rem;
+}
+.pictures-folder-button {
+  color: $blue;
+  font-size: 1.1rem;
+}
+.music-folder-button {
+  color: $yellow;
+  font-size: 1.1rem;
+}
+.dev-folder-button {
+  color: $purple;
+  font-size: 1.1rem;
+}
+.config-folder-button {
+  color: $red;
+  font-size: 1.1rem;
+}
+.local-folder-button {
+  color: $blue;
+  font-size: 1.1rem;
+}
+
+.weather-dashboard {
+  background-color: $dark;
+  border-radius: 15px;
+  padding: .7rem .7rem .7rem .7rem;
+}
+.weather-status-icon {
+  font-size: 5rem;
+}
+.weather-temp {
+  font-size: 2rem;
+}
+.sunny-weather {
+  color: $orange;
+  font-size: 2rem;
+}
+.rainy-weather {
+  color: $blue;
+  font-size: 2rem;
+}
+.snowy-weather {
+  color: $cyan;
+  font-size: 2rem;
+}
+.cloudy-weather {
+  color:$soft;
+  font-size: 2rem;
+}
+.weather-title {
+  color: $red;
+  font-size: 2rem;
+}
+.weather-desc {
+  color: $fg;
+  font-size: .7rem;
+}
+
+/* Notif */
+.notif {
+  background-color: $dark;
+}
+

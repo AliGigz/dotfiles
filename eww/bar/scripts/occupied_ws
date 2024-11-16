@@ -1,0 +1,9 @@
+#!/bin/bash
+
+
+occupieds="$(bspc query -D -d .occupied --names)"
+echo $occupieds
+
+bspc subscribe desktop node_transfer | while read -r _ ; do
+	~/.config/eww/bar/scripts/occupied_ws
+done

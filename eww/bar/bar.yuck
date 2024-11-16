@@ -1,0 +1,166 @@
+(defwindow bar
+	:monitor 0
+	:exclusive true
+	:geometry (geometry
+				:x "10px"
+				:width "3%"
+				:height "98%"
+				:anchor "left center")
+	:stacking "fg"
+	:reserve (struts :distance "4%" :side "left")
+	:windowtype "dock"
+	:wm-ignore false
+	(bar_content))
+
+
+(defwidget bar_content []
+	(box
+		:orientation "vertical"
+		:space-evenly false
+		(top_content)
+		(center_content)
+		(bottom_content)))
+
+(defwidget top_content []
+	(box
+		:class "top-content"
+		:orientation "vertical"
+		:valign "start"
+		:halign "center"
+		:space-evenly false
+		(launcher)
+		(workspaces)))
+
+(defwidget center_content []
+	(box
+		:class "center-conetnt"
+		:orientation "vertical"
+		:valign "center"
+		:halign "center"
+		:space-evenly false
+		(temp)
+		(memory
+			:mem_percentage mem)
+		(disk
+			:disk_usage disk_free)))
+
+(defwidget bottom_content []
+	(box
+		:class "bottom-content"
+		:orientation "vertical"
+		:valign "end"
+		:halign "center"
+		:space-evenly false
+		(wifi
+			:ssid net)
+		(battery
+			:status {EWW_BATTERY.BATC.status}
+			:percentage {EWW_BATTERY.BATC.capacity})
+		(clock)
+		(powermenu)))
+
+(defvar ws_numbers "[1, 2, 3, 4, 5, 6, 7]")
+(deflisten focused_workspace
+	:inital "1"
+	:keepalive true
+	"~/.config/eww/bar/scripts/focused_ws")
+(deflisten occupied_workspace
+	:inital "1"
+	:keepalive true
+	"~/.config/eww/bar/scripts/occupied_ws")
+
+(defwidget workspaces []
+	(box
+		:class "workspaces"
+		:orientation "vertical"
+		:valign "start"
+		:spacing 5
+		(for ws in ws_numbers
+			(eventbox
+				:cursor "pointer"
+				(button
+					:class { "${ws}" == "${focused_workspace}" ? "workspace-button focused-ws" :
+						matches("${occupied_workspace}", "${ws}") ? "workspace-button occupied-ws" : "workspace-button" }
+					:tooltip "Switch to workspace ${ws}"
+					:onclick "bspc desktop -f ${ws}"
+					"○")))))
+
+(defwidget launcher []
+	(eventbox
+		:cursor "pointer"
+		(button
+			:class "launcher-button"
+			:tooltip "Launcher"
+			:onclick "~/.config/eww/dashboard/scripts/launch_all"
+			"")))
+
+(defpoll time :interval "60s"
+  `date +'{"hour":"%H","minute":"%M"}'`)
+
+(defwidget clock []
+	(box
+		:class "clock"
+		:orientation "vertical"
+		:tooltip "Time is ${time.hour}:${time.minute}"
+		(label :text "${time.hour}")
+		(label :text "${time.minute}")))
+
+(defwidget battery [status percentage]
+	(label
+		:class "battery-box"
+		:tooltip "${percentage}%"
+		:text { status == "Charging" ?  "󰂄" :
+			percentage < 5 ? "󰂎" :
+			percentage < 20 ?  "󱊡" :
+			percentage < 75 ?  "󱊢" : "󱊣" }))
+
+(defpoll net
+	:interval "5s"
+	`iwgetid -r`)
+
+(defwidget wifi [ssid]
+	(label
+		:class { ssid == "" ? "wifi-box not-connected" : "wifi-box"}
+		:tooltip { ssid == "" ? "Not connected" : "Connected to ${ssid}" }
+		:text { ssid == "" ? "󱚼" : "󱚻" }))
+
+(defpoll disk_free
+	:interval "60s"
+	"python ~/.config/eww/bar/scripts/disk.py")
+(defwidget disk [disk_usage]
+	(label
+		:class "disk-box"
+		:tooltip "${disk_usage}GB free"
+		:text ""))
+
+
+(defpoll mem
+	:interval "1s"
+	"python ~/.config/eww/bar/scripts/memory.py")
+(defwidget memory [mem_percentage]
+	(label
+		:class "memory-box"
+		:tooltip "${mem_percentage} is being used"
+		:text ""))
+
+(defpoll cpu_temp
+	:interval "30s"
+	"cat /sys/class/thermal/thermal_zone0/temp")
+(defwidget temp []
+	(label
+		:class "temp-box"
+		:tooltip "${cpu_temp / 1000}°C"
+		:text ""))
+
+
+(defwidget powermenu []
+	(eventbox
+		:cursor "pointer"
+		(button
+			:geometry (geometry
+				:height "10px")
+			:tooltip "Poweroff"
+			:class "powermenu-button"
+			:onclick "eww open powermenu"
+			"")))
+
