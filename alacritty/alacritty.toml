@@ -1,0 +1,12 @@
+[colors.primary]
+background = "#11111b"
+foreground = "#cdd6f4"
+
+[font]
+size = 7.0
+
+[font.normal]
+family = "JetBrainsMonoNL Nerd Font Mono"
+
+[window]
+opacity = 1.0
