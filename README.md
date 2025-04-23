@@ -17,10 +17,10 @@
 
 ## 📷  Screenshots
 <div align="center">
-    <img src="https://github.com/AliGigz/dotfiles/blob/master/screenshots/anime-girl-dwm.png">
+    <img src="https://github.com/AliGigz/dotfiles/blob/master/screenshots/jesus-dwm.png">
     <br>
     <br>
-    <img src="https://github.com/AliGigz/dotfiles/blob/master/screenshots/anime-girl-dwm-nvim.png">
+    <img src="https://github.com/AliGigz/dotfiles/blob/master/screenshots/jesus-dwm-nvim.png">
 </div>
 
 ## 🔨  Installation
