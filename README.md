@@ -30,6 +30,7 @@
 </div>
 
 ## 🔨  Installation
+<h4>DWM</h4>
 First backup your neovim config. with the command below:
 ```sh
 git clone https://github.com/AliGigz/dotfiles ~/.config/
@@ -45,6 +46,8 @@ cd ~/.config/dmenu/ && make clean install
 cd ~/.config/st/ && make clean install
 cd ~/.config/slstatus/ && make clean install
 ```
+<h4>BSPWM</h4>
+Just copy `bspwm,sxhkd,eww` to `~/.config`.
 
 ## ✏️  Colors
 -   Catppuccin: https://github.com/catppuccin
