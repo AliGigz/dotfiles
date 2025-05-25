@@ -1,0 +1,221 @@
+$crust:  #11111b;
+$base:   #232338;
+$fg:     #cdd6f8;
+$red:    #f38ba8;
+$blue:   #8caaee;
+$sky:    #89dceb;
+$green:  #a6e3a1;
+$yellow: #f9e2af;
+$mauve:  #cba6f7;
+$pink:   #f5c2e7;
+$orange: #fab387;
+
+
+* {
+  all: unset;
+  font-family: "JetBrainsMono Nerd Font Mono";
+  font-weight: bold;
+}
+
+.col-fg {
+  color: $fg;
+}
+.col-crust {
+  color: $crust;
+}
+.col-base {
+  color: $base;
+}
+.col-blue {
+  color: $blue;
+}
+.col-red {
+  color: $red;
+}
+.col-pink {
+  color: $pink;
+}
+.col-sky {
+  color: $sky;
+}
+.col-green {
+  color: $green;
+}
+.col-yellow {
+  color: $yellow;
+}
+.col-orange {
+  color: $yellow;
+}
+.col-mauve {
+  color: $mauve;
+}
+
+.f-10 {
+  font-size: 10px;
+}
+.f-13 {
+  font-size: 13px;
+}
+.f-16 {
+  font-size: 16px;
+}
+.f-20 {
+  font-size: 20px;
+}
+.f-50 {
+  font-size: 50px;
+}
+.f-100 {
+  font-size: 100px;
+}
+
+.p-5 {
+  padding: 5px 5px 5px 5px;
+}
+.p-10 {
+  padding: 10px 10px 10px 10px;
+}
+.p-20 {
+  padding: 20px 20px 20px 20px;
+}
+.ps-5 {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.ps-10 {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.ps-20 {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.pr-5 {
+  padding-right: 5px;
+}
+.pl-5 {
+  padding-left: 5px;
+}
+.pr-10 {
+  padding-right: 10px;
+}
+.pl-10 {
+  padding-left: 10px;
+}
+
+.mt-10 {
+  margin-top: 10px;
+}
+.mb-10 {
+  margin-bottom: 10px;
+}
+.mr-5 {
+  margin-right: 5px;
+}
+.ml-5 {
+  margin-left: 5px;
+}
+.mr-10 {
+  margin-right: 10px;
+}
+.ml-10 {
+  margin-left: 10px;
+}
+
+.w {
+  padding-right: 10px;
+  padding-left: 10px;
+}
+.w-crust {
+  background-color: $crust;
+  padding: 5px 5px 5px 5px;
+}
+
+.elmnt {
+  background-color: $base;
+  border-radius: 10px;
+}
+.icon-blue {
+  background-color: $blue;
+  color: $crust;
+  border-radius: 10px;
+}
+.icon-red {
+  background-color: $red;
+  color: $crust;
+  border-radius: 10px;
+}
+.icon-green {
+  background-color: $green;
+  color: $crust;
+  border-radius: 10px;
+}
+.icon-pink {
+  background-color: $pink;
+  color: $crust;
+  border-radius: 10px;
+}
+.icon-yellow {
+  background-color: $yellow;
+  color: $crust;
+  border-radius: 10px;
+}
+.icon-orange {
+  background-color: $orange;
+  color: $crust;
+  border-radius: 10px;
+}
+.icon-mauve {
+  background-color: $mauve;
+  color: $crust;
+  border-radius: 10px;
+}
+.icon-sky {
+  background-color: $sky;
+  color: $crust;
+  border-radius: 10px;
+}
+.col-blue {
+  color: $blue;
+}
+.col-orange {
+  color: $orange;
+}
+.col-red {
+  color: $red;
+}
+.col-mauve {
+  color: $mauve;
+}
+.col-pink {
+  color: $pink;
+}
+.col-green {
+  color: $green;
+}
+.col-yellow {
+  color: $yellow;
+}
+
+.scalebar trough {
+  background-color: $crust;
+  border-radius: 15px;
+  min-width: 100px;
+  min-height: 5px;
+}
+.scalebar-red trough highlight {
+  background-color: $red;
+  border-radius: 15px;
+}
+.scalebar-yellow trough highlight {
+  background-color: $yellow;
+  border-radius: 15px;
+}
+
+.border-blue {
+  border: 2px solid $blue;
+}
+
+
+

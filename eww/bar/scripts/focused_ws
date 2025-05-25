@@ -1,0 +1,10 @@
+#!/bin/bash
+
+
+ws=$(bspc query -D -d focused --names)
+echo $ws
+
+bspc subscribe desktop node_transfer | while read -r _ ; do
+	~/.config/eww/bar/scripts/focused_ws
+done
+

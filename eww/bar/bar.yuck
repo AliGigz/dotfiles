@@ -1,0 +1,177 @@
+(defpoll time :interval "60s" `date +'{"hour":"%H","min":"%M"}'`)
+(defvar wsses "[1, 2, 3, 4, 5, 6, 7]")
+(deflisten focused_ws :keepalive true `/home/${USER}/.config/eww/bar/scripts/focused_ws`)
+(deflisten occupied_ws :keepalive true `/home/${USER}/.config/eww/bar/scripts/occupied_ws`)
+(defpoll ssid :interval "1s" `iwgetid -r`)
+(defpoll dayow :interval "60s" `date +'%A'`)
+(defpoll vol :interval "1s" `awk -F"[][]" '/Left:/ { print $2 }' <(amixer sget Master) | sed 's/%//'`)
+(defpoll brightness :interval "1s" `brightnessctl -m -d intel_backlight | awk -F, '{print substr($4, 0, length($4)-1)}' | tr -d '%'`)
+(defvar wifi_rev false)
+(defvar bat_rev false)
+(defvar clock_rev false)
+(defvar cpu_rev false)
+(defvar mem_rev false)
+(defvar disk_rev false)
+(defvar bright_rev false)
+(defvar vol_rev false)
+
+
+(defwidget bright []
+	(eventbox
+		:cursor "pointer"
+		:onhover "eww update bright_rev=true" :onhoverlost "eww update bright_rev=false"
+		:tooltip "${brightness}%"
+		(box
+			:class "elmnt mr-10"
+				:orientation "h"
+				:space-evenly false :vexpand false :hexpand false
+				(label :class "icon-yellow ps-20 f-20" :text "󰃟")
+				(revealer :transition "slideright" :reveal bright_rev :duration "350ms"
+					(scale :class "scalebar scalebar-yellow ml-10 mr-10" :orientation "h" :value brightness :min 0 :max 100 :onchange "brightnessctl s {}%")))))
+
+(defwidget volume []
+	(eventbox
+		:cursor "pointer"
+		:onhover "eww update vol_rev=true" :onhoverlost "eww update vol_rev=false"
+		:tooltip "${vol}%"
+		(box
+			:class "elmnt mr-10"
+				:orientation "h"
+				:space-evenly false :vexpand false :hexpand false
+				(label :class "icon-red ps-20 f-20" :text "")
+				(revealer :transition "slideright" :reveal vol_rev :duration "350ms"
+					(scale :class "scalebar scalebar-red ml-10 mr-10" :orientation "h" :value vol :min 0 :max 100 :onchange "amixer set Master {}%")))))
+
+(defwidget workspaces []
+	(box
+		:class "elmnt f-20 pl-10"
+		:orientation "h"
+		(for ws in wsses
+			(eventbox
+				:cursor "pointer"
+				(button
+					:class { "${ws}" == "${focused_ws}" ? "col-sky" :
+						matches("${occupied_ws}", "${ws}") ? "col-sky" : "col-crust"}
+					:tooltip "switch to workspace ${ws}"
+					:onclick "bspc desktop -f ${ws}"
+					{ "${ws}" == "${focused_ws}" ? "  " : "  " } )))))
+
+(defwidget wifi []
+	(eventbox
+		:onhover "eww update wifi_rev=true" :onhoverlost "eww update wifi_rev=false"
+		(box
+			:class "elmnt"
+			:orientation "h"
+			:space-evenly false :vexpand false :hexpand false
+				(label :class { ssid != "" ? "icon-blue ps-20 f-20" : "icon-red ps-20 f-20" } :text { ssid != "" ? "󰤢" : "󰤮" })
+			(revealer :transition "slideright" :reveal wifi_rev :duration "350ms"
+				(label :class "ml-10 mr-10" :orientation "h" :text { ssid != "" ? ssid : "Not Conneted" })))))
+
+(defwidget bat []
+	(eventbox
+		:onhover "eww update bat_rev=true" :onhoverlost "eww update bat_rev=false"
+		(box
+			:class "elmnt ml-10"
+			:orientation "h"
+			:space-evenly false
+			(label
+				:class { EWW_BATTERY.BATC.capacity > 25 ? "icon-green ps-20 f-20" : "icon-red ps-20 f-20" }
+				:text { "${EWW_BATTERY.BATC.status}" == "Charging" ? "" :
+				EWW_BATTERY.BATC.capacity >= 90 ? "" :
+				EWW_BATTERY.BATC.capacity >= 60 ? "" :
+				EWW_BATTERY.BATC.capacity >= 40 ? "" :
+				EWW_BATTERY.BATC.capacity >= 20 ? "" : ""})
+				(revealer :transition "slideright" :reveal bat_rev :duration "350ms"
+					(label :class "ml-10 mr-10" :text "${EWW_BATTERY.BATC.capacity}%")))))
+
+(defwidget memory []
+	(eventbox
+		:onhover "eww update mem_rev=true" :onhoverlost "eww update mem_rev=false"
+		(box
+			:class "elmnt ml-10"
+			:orientation "h"
+			:space-evenly false
+			(label :class { floor(EWW_RAM.used_mem_perc) > 50 ? "icon-orange ps-20 f-20" : "icon-yellow ps-20 f-20" } :text "")
+				(revealer :transition "slideright" :reveal mem_rev :duration "350ms"
+					(label :class "mr-10 ml-10" :text "${floor(EWW_RAM.used_mem_perc)}%")))))
+
+(defwidget cpu []
+	(eventbox
+		:onhover "eww update cpu_rev=true" :onhoverlost "eww update cpu_rev=false"
+		(box
+			:class "elmnt ml-10"
+			:orientation "h"
+			:space-evenly false
+			(label :class { floor(EWW_CPU.avg) > 50 ? "icon-red ps-20 f-20" : "icon-mauve ps-20 f-20" } :text "")
+			(revealer :transition "slideright" :reveal cpu_rev :duration "350ms"
+				(label :class "ml-10 mr-10" :text "${floor(EWW_CPU.avg)}%")))))
+
+(defwidget disk []
+	(eventbox
+		:onhover "eww update disk_rev=true" :onhoverlost "eww update disk_rev=false"
+		(box
+			:class "elmnt ml-10"
+			:orientation "h"
+			:space-evenly false
+			(label :class { floor(EWW_DISK["/"].used_perc) > 50 ? "icon-red ps-20 f-20" : "icon-yellow ps-20 f-20" } :text "")
+			(revealer :transition "slideright" :reveal disk_rev :duration "350ms"
+				(label :class "ml-10 mr-10" :text "${floor(EWW_DISK['/'].used_perc)}%")))))
+
+(defwidget clock []
+	(eventbox
+		:onhover "eww update clock_rev=true" :onhoverlost "eww update clock_rev=false"
+		(box
+			:class "elmnt ml-10"
+			:orientation "h"
+			:space-evenly false
+			(label :class "icon-pink ps-20 f-20" :text "󰥔")
+			(revealer :transition "slideright" :reveal clock_rev :duration "350ms"
+				(label :class "ml-10 mr-10" :text "${dayow} 󰇙 ${time.hour}:${time.min}")))))
+
+(defwidget menu []
+	(label :class "icon-mauve ps-20 ml-10 f-20" :text "󰣇"))
+
+(defwidget left_contents []
+	(box
+		:orientation "h"
+		:valign "center"
+		:halign "start"
+		:space-evenly false
+		(workspaces)
+		(cpu)
+		(memory)
+		(disk)))
+
+(defwidget right_content []
+	(box
+		:orientation "h"
+		:space-evenly false
+		:valign "center"
+		:halign "end"
+		(volume)
+		(bright)
+		(wifi)
+		(bat)
+		(clock)
+		(menu)))
+
+(defwidget content []
+	(box
+		:class "w w-crust"
+		:orientation "h"
+		(left_contents)
+		(right_content)))
+
+(defwindow bar
+	:stacking "fg"
+	:windowtype "dock"
+	:wm-ignore false
+	:reserve (struts :distance "5%" :side "top")
+	:geometry (geometry
+		:x "0%"
+		:y "0%"
+		:width "100%"
+		:height "4%"
+		:anchor "top center")
+	(content))
+
