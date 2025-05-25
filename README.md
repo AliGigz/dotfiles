@@ -16,15 +16,19 @@
 </div>
 
 ## 📷  Screenshots
-### DWM
 <div align="center">
+    <h4>DWM</h4>
+    <br>
+    <br>
     <img src="https://github.com/AliGigz/dotfiles/blob/master/screenshots/jesus-dwm.png">
     <br>
     <br>
     <img src="https://github.com/AliGigz/dotfiles/blob/master/screenshots/jesus-dwm-nvim.png">
-</div>
-### BSPWM
-<div align="center">
+    <br>
+    <br>
+    <h4>BSPWM</h4>
+    <br>
+    <br>
     <img src="https://github.com/AliGigz/dotfiles/blob/master/screenshots/bspwm-eww.png">
 </div>
 
