@@ -59,4 +59,7 @@ Just copy `bspwm,sxhkd,eww` to `~/.config`.
 -   dmenu: https://tools.suckless.org/dmenu
 -   st: https://st.suckless.org
 -   slstatus: https://tools.suckless.org/slstatus
+-   bspwm: https://github.com/baskerville/bspwm
+-   bspwm: https://github.com/baskerville/sxhkd
+-   eww: https://github.com/elkowar/eww
 
