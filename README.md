@@ -49,7 +49,7 @@ cd ~/.config/slstatus/ && make clean install
 ```
 
 ### BSPWM
-Just copy "bspwm,sxhkd,eww" to "~/.config".
+Just copy `bspwm,sxhkd,eww` to `~/.config`.
 
 ## ✏️  Colors
 -   Catppuccin: https://github.com/catppuccin
