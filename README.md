@@ -47,7 +47,7 @@ cd ~/.config/st/ && make clean install
 cd ~/.config/slstatus/ && make clean install
 ```
 <h4>BSPWM</h4>
-Just copy `bspwm,sxhkd,eww` to `~/.config`.
+Just copy "bspwm,sxhkd,eww" to "~/.config".
 
 ## ✏️  Colors
 -   Catppuccin: https://github.com/catppuccin
